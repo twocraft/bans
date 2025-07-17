@@ -8,7 +8,8 @@ const db = require('./dba');
     const app = require("./app").createApp(db.pool);
 
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
+    const host = process.env.HOST || '0.0.0.0';
+    app.listen(port, host, () => {
         console.log(`Server running on port: ${port}`);
     });
 })();

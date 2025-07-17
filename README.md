@@ -2,6 +2,7 @@ Default .env file:
 
 ```dotenv
 PORT=8080
+HOST=127.0.0.1
 DATABASE=bans
 DATABASE_HOST=localhost
 DATABASE_PORT=3306
