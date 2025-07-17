@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.0.42-bookworm
+    environment:
+      MYSQL_DATABASE: bans
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test: mysqlshow -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD | grep $$MYSQL_DATABASE
+      start_period: 5s
+      interval: 1s
+      timeout: 5s
+      retries: 60
+
+  app:
+    build:
+      context: .
+      dockerfile: test.Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      PORT: 8080
+      DATABASE: bans
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password

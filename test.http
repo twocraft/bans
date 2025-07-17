@@ -1,0 +1,23 @@
+POST localhost:8080/api/ban
+Content-Type: application/json; charset=utf-8
+Authorization: basic-key
+
+{
+    "user": "bad_user",
+    "reason": "hammer"
+}
+
+
+###
+POST localhost:8080/api/pardon
+Content-Type: application/json; charset=utf-8
+Authorization: basic-key
+
+{
+    "user": "bad_user"
+}
+
+
+###
+GET localhost:8080/api/ban
+Authorization: basic-key

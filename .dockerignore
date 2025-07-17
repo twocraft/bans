@@ -1,0 +1,9 @@
+.gitignore
+.env
+.idea
+*.http
+node_modules
+ecosystem.json
+README.md
+test.Dockerfile
+test-compose.yaml

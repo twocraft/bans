@@ -1,0 +1,301 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "REST API",
+    "description": "Bans",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "scheme": "bearer",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/api/ban": {
+      "post": {
+        "tags": [
+          "Bans"
+        ],
+        "description": "Бан",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Ник / ip",
+            "example": "kek",
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "description": "Причина бана",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Тип. soft / hard",
+            "type": "enum"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "any"
+                },
+                "reason": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Бан",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "user": {
+                  "type": "string",
+                  "example": "bad-man"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Bans"
+        ],
+        "description": "Получение списка банов",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Поиск по нику / ip",
+            "type": "string"
+          },
+          {
+            "name": "strict",
+            "in": "query",
+            "description": "Поиск по точному совпадению ника / ip",
+            "type": "boolean"
+          },
+          {
+            "name": "banId",
+            "in": "query",
+            "description": "Поиск по id бана",
+            "type": "number"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "Фильтр всех обновлённых записей с даты. ISO",
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Смещение от начала",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Лимит записей, от 1 до 1000",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список банов",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "limit": {
+                  "type": "number",
+                  "example": 100
+                },
+                "offset": {
+                  "type": "number",
+                  "example": 0
+                },
+                "totalCount": {
+                  "type": "number",
+                  "example": 1
+                },
+                "bans": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "user": {
+                        "type": "string",
+                        "example": "bad-man"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2025-07-15T10:15:00.000Z"
+                      },
+                      "commonMessage": {
+                        "type": "string",
+                        "example": "Общая заметка про игрока"
+                      },
+                      "reports": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "reporter": {
+                              "type": "string",
+                              "example": "Server"
+                            },
+                            "reason": {
+                              "type": "string",
+                              "example": "Грифер"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "hard"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/pardon": {
+      "post": {
+        "tags": [
+          "Bans"
+        ],
+        "description": "Разбан",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "Ник / ip",
+            "type": "string"
+          },
+          {
+            "name": "banId",
+            "in": "query",
+            "description": "id бана",
+            "type": "number"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "any"
+                },
+                "banId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Разбан",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "user": {
+                  "type": "string",
+                  "example": "bad-man"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Common"
+        ],
+        "description": "Проверка что сервис работает",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  }
+}
